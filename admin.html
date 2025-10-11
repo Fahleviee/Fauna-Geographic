@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Fauna Geographic</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Tombol Toggle -->
+  <button class="toggle-btn" id="toggleSidebar">☰</button>
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <h2>Fauna Admin</h2>
+    <a href="#" class="active">Kelola Fauna</a>
+    <a href="index.html">Kembali ke Beranda</a>
+    <a href="index.html">Logout</a>
+  </div>
+
+  <!-- Konten utama -->
+  <div class="main-content" id="mainContent">
+    <h1>Dashboard Admin</h1>
+    <p>Selamat Datang Atmint</p>
+
+    <div class="dashboard-container">
+      <!-- Form input fauna -->
+      <form>
+        <input type="text" placeholder="Nama Fauna" required>
+        <input type="text" placeholder="Habitat" required>
+        <input type="text" placeholder="Status (misal: Terancam Punah)" required>
+        <button type="button">Simpan</button>
+      </form>
+
+      <!-- Tabel data fauna -->
+      <table>
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Nama</th>
+            <th>Habitat</th>
+            <th>Status</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Komodo</td>
+            <td>Nusa Tenggara Timur</td>
+            <td>Terancam Punah</td>
+            <td>
+              <button>Edit</button>
+              <button>Hapus</button>
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Cenderawasih</td>
+            <td>Papua</td>
+            <td>Dilindungi</td>
+            <td>
+              <button>Edit</button>
+              <button>Hapus</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

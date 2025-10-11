@@ -1,0 +1,331 @@
+/* ==========================
+   GLOBAL STYLE
+========================== */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f9f5ef;
+  color: #4b2e2e;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ==========================
+   NAVBAR ATAS
+========================== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #d2691e;
+  padding: 10px 20px;
+  color: #fff;
+}
+
+.navbar .logo {
+  margin: 0;
+  font-size: 20px;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar ul li {
+  margin-left: 20px;
+}
+
+.navbar ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.navbar ul li a:hover,
+.navbar ul li a.active {
+  text-decoration: underline;
+}
+
+/* ==========================
+   CARD LOGIN & REGISTER
+========================== */
+.login-card {
+  width: 320px;
+  margin: 60px auto;
+  padding: 25px;
+  background-color: #fff8f0;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+.login-card h1 {
+  margin-bottom: 20px;
+}
+
+.login-card input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.login-card button {
+  width: 100%;
+  padding: 10px;
+  background-color: #ff7f50;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.login-card button:hover {
+  background-color: #e5673f;
+}
+
+.register-link {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* ==========================
+   HERO SECTION
+========================== */
+.hero {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: #ffe4c4;
+  color: #4b2e2e;
+}
+
+.hero h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 18px;
+  margin: 0;
+}
+
+/* ==========================
+   FEATURES & CTA
+========================== */
+.features {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.features h2 {
+  margin-bottom: 15px;
+}
+
+.cta {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.cta .btn {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #ff7f50;
+  color: white;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.cta .btn:hover {
+  background-color: #e5673f;
+}
+
+/* ==========================
+   FAUNA CARD (INDEX & DASHBOARD)
+========================== */
+.fauna-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 20px auto;
+  max-width: 800px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.fauna-card img {
+  width: 200px;
+  height: auto;
+  border-radius: 8px;
+}
+
+.fauna-info h3 {
+  margin-top: 0;
+  color: #d2691e;
+}
+
+.fauna-info p {
+  margin: 5px 0;
+}
+
+/* ==========================
+   FOOTER
+========================== */
+footer {
+  text-align: center;
+  padding: 15px;
+  background-color: #d2691e;
+  color: white;
+  margin-top: auto;
+}
+
+/* ==========================
+   DASHBOARD ADMIN + SIDEBAR
+========================== */
+
+/* Tombol toggle ☰ */
+.toggle-btn {
+  background-color: #d2691e;
+  color: white;
+  font-size: 22px;
+  border: none;
+  cursor: pointer;
+  padding: 10px 15px;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  border-radius: 4px;
+  z-index: 1001;
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 220px;
+  background-color: #d2691e;
+  color: white;
+  padding: 20px;
+  transition: transform 0.3s ease;
+  transform: translateX(0);
+  z-index: 1000;
+}
+
+.sidebar.hidden {
+  transform: translateX(-250px);
+}
+
+.sidebar h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.sidebar a {
+  display: block;
+  color: white;
+  text-decoration: none;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+  background-color: #e67a32;
+}
+
+/* Konten utama dashboard */
+.main-content {
+  margin-left: 240px;
+  flex: 1;
+  padding: 30px;
+  transition: margin-left 0.3s ease;
+}
+
+.main-content.expanded {
+  margin-left: 40px;
+}
+
+.dashboard-container {
+  max-width: 900px;
+  margin: 20px auto;
+  background-color: #fff8f0;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Table style */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table, th, td {
+  border: 1px solid #ccc;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #d2691e;
+  color: white;
+}
+
+/* Form style */
+form {
+  margin-bottom: 20px;
+}
+
+input[type="text"] {
+  padding: 8px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Button */
+button {
+  background-color: #ff7f50;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  margin: 2px;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #e5673f;
+}
+
+/* Responsif */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-250px);
+  }
+  .sidebar.show {
+    transform: translateX(0);
+  }
+  .main-content {
+    margin-left: 0;
+    padding: 20px;
+  }
+}
