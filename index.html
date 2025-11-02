@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Navigasi -->
   <nav class="navbar" id="mainNavbar">
     <h2 class="logo">Fauna Geographic</h2>
     <ul>
@@ -17,194 +16,122 @@
     </ul>
   </nav>
 
-  <!-- Hero -->
   <section class="hero" id="heroSection">
     <h1 id="heroTitle">Selamat Datang di Fauna Geographic</h1>
     <p id="heroSubtitle">Menjelajahi dunia fauna dengan pengetahuan & rasa kagum.</p>
   </section>
 
-  <!-- Kategori Fauna (container dibuat kosong, akan diisi via JS) -->
   <section class="features">
     <h2>Fauna Nusantara</h2>
-    <div id="faunaList">
-      <!-- Kartu fauna akan dibuat di sini oleh JavaScript -->
-    </div>
+    <div id="faunaList"></div>
   </section>
 
-  <!-- Call to Action -->
   <section class="cta">
     <p id="ctaText">Bergabunglah dengan komunitas kami untuk membaca artikel lengkap dan berbagi pengetahuan!</p>
     <a href="register.html" id="joinBtn" class="btn">Daftar Sekarang</a>
   </section>
 
-  <!-- Footer -->
   <footer>
     <p>&copy; 2025 Fauna Geographic | Semua Hak Dilindungi</p>
   </footer>
 
-  <!-- Toast container (dibuat di DOM oleh script jika belum ada) -->
   <script>
-  // ===== Data fauna (endomik Nusantara: 3 item) =====
   const faunaData = [
     {
       id: 'komodo',
       name: 'Komodo',
-      emoji: '🦎',
       img: 'asset/komodo.jpeg',
-      text: 'Komodo adalah kadal terbesar di dunia yang hanya dapat ditemukan di Nusa Tenggara Timur, terutama di Pulau Komodo, Rinca, dan sekitarnya. Dengan panjang mencapai tiga meter, hewan ini merupakan predator puncak. Populasinya semakin terancam akibat perburuan dan kerusakan habitat, sehingga dilindungi secara ketat.'
+      desc: 'Komodo adalah kadal terbesar di dunia yang hanya dapat ditemukan di Nusa Tenggara Timur.'
     },
     {
       id: 'cenderawasih',
       name: 'Cenderawasih',
-      emoji: '🐦',
       img: 'asset/cenderawasih.jpeg',
-      text: 'Burung Cenderawasih, dikenal sebagai "burung surga", hanya hidup di Papua dan pulau-pulau sekitarnya. Burung ini terkenal dengan bulunya yang indah dan tarian kawin yang mempesona. Habitat alaminya adalah hutan hujan tropis, namun kini terancam akibat perburuan dan deforestasi.'
+      desc: 'Burung Cenderawasih dikenal sebagai burung surga karena bulunya yang indah dan tarian khasnya.'
     },
     {
       id: 'anoa',
       name: 'Anoa',
-      emoji: '🐃',
       img: 'asset/anoa.jpeg',
-      text: 'Anoa adalah kerbau kerdil yang hanya ditemukan di Sulawesi. Hewan ini hidup di hutan pegunungan dan rawa-rawa, serta dikenal pemalu dan sulit dijinakkan. Populasi anoa terus menurun karena perburuan dan perusakan habitat, sehingga masuk kategori terancam punah.'
+      desc: 'Anoa adalah kerbau kecil endemik Sulawesi yang hidup di hutan hujan tropis.'
     }
   ];
 
-  // ===== Utility: buat toast/snackbar murni JS =====
   function ensureToastContainer() {
-    let container = document.getElementById('toastContainer');
-    if (!container) {
-      container = document.createElement('div');
-      container.id = 'toastContainer';
-      container.setAttribute('aria-live', 'polite');
-      container.setAttribute('aria-atomic', 'true');
-      document.body.appendChild(container);
+    let c = document.getElementById('toastContainer');
+    if (!c) {
+      c = document.createElement('div');
+      c.id = 'toastContainer';
+      document.body.appendChild(c);
     }
-    return container;
+    return c;
   }
 
-  function showToast(message, options = {}) {
-    // options: { duration: ms, type: 'info'|'success'|'error' }
-    const duration = options.duration || 3500;
-    const type = options.type || 'info';
-    const container = ensureToastContainer();
-
-    const toast = document.createElement('div');
-    toast.className = 'toast ' + type;
-    toast.role = 'status';
-    toast.textContent = message;
-
-    // close button
-    const closeBtn = document.createElement('button');
-    closeBtn.className = 'toast-close';
-    closeBtn.setAttribute('aria-label', 'Tutup notifikasi');
-    closeBtn.innerHTML = '&times;';
-    closeBtn.onclick = () => { hideToast(toast); };
-    toast.appendChild(closeBtn);
-
-    container.appendChild(toast);
-
-    // slide in
-    requestAnimationFrame(() => toast.classList.add('show'));
-
-    // auto-hide
-    const t = setTimeout(() => hideToast(toast), duration);
-    toast.dataset.timeout = t;
+  function showToast(message, type = 'info', duration = 3000) {
+    const c = ensureToastContainer();
+    const t = document.createElement('div');
+    t.className = 'toast ' + type;
+    t.textContent = message;
+    c.appendChild(t);
+    setTimeout(() => t.classList.add('show'), 10);
+    setTimeout(() => {
+      t.classList.remove('show');
+      t.addEventListener('transitionend', () => t.remove());
+    }, duration);
   }
-
-  function hideToast(toast) {
-    if (!toast) return;
-    // clear timeout if exists
-    if (toast.dataset.timeout) clearTimeout(toast.dataset.timeout);
-    toast.classList.remove('show');
-    toast.addEventListener('transitionend', () => {
-      if (toast.parentNode) toast.parentNode.removeChild(toast);
-    }, { once: true });
-  }
-
-  // ===== DOM Manipulations (minimal 3 operasi DOM tercapai di sini) =====
-  // 1) Update hero text (textContent) -> DOM operation #1
-  // 2) Generate fauna cards dynamically using createElement / appendChild -> DOM ops #2..N
-  // 3) Add attributes/event listeners (setAttribute, addEventListener) for detail buttons -> DOM ops
 
   document.addEventListener('DOMContentLoaded', () => {
-    // (1) ubah teks hero secara dinamis (DOM manipulation)
-    const heroTitle = document.getElementById('heroTitle');
-    heroTitle.textContent = 'Jelajahi Fauna Endemik Nusantara';
-    const heroSubtitle = document.getElementById('heroSubtitle');
-    heroSubtitle.textContent = 'Tiga fauna ikonik yang hanya bisa kamu temukan di Indonesia.';
+    alert("Selamat datang di Fauna Geographic! 🌿");
+    document.getElementById('heroTitle').textContent = "Eksplorasi Fauna Endemik Nusantara";
 
-    // (2) Buat cards fauna secara dinamis
     const list = document.getElementById('faunaList');
-
-    faunaData.forEach(item => {
-      // container card
+    faunaData.forEach(f => {
       const card = document.createElement('div');
       card.className = 'fauna-card';
-      card.id = 'card-' + item.id;
-
-      // gambar
       const img = document.createElement('img');
-      img.src = item.img;
-      img.alt = item.name;
-      img.setAttribute('loading', 'lazy'); // attribute example
+      img.src = f.img;
+      img.alt = f.name;
+      img.className = 'fauna-img';
 
-      // info container
       const info = document.createElement('div');
       info.className = 'fauna-info';
-
       const h3 = document.createElement('h3');
-      h3.textContent = item.emoji + ' ' + item.name;
-
+      h3.textContent = f.name;
       const p = document.createElement('p');
-      p.textContent = item.text;
-
-      // tombol lihat detail (akan memicu toast)
-      const detail = document.createElement('a');
-      detail.href = '#';
-      detail.className = 'detail-link';
-      detail.textContent = 'Lihat Detail';
-      // set data attribute (DOM op)
-      detail.setAttribute('data-fauna', item.id);
-
-      // event listener untuk tombol detail (DOM op: addEventListener)
-      detail.addEventListener('click', (e) => {
-        e.preventDefault();
-        // contoh aksi: tampilkan toast dan simpan last viewed di localStorage
-        showToast('Membuka detail: ' + item.name, { type: 'info', duration: 2500 });
-        localStorage.setItem('lastViewedFauna', item.id);
-      });
-
-      // susun elemen
+      p.textContent = f.desc;
       info.appendChild(h3);
       info.appendChild(p);
-      info.appendChild(detail);
-
       card.appendChild(img);
       card.appendChild(info);
-
       list.appendChild(card);
+
+      img.addEventListener('mouseover', () => {
+        showToast("Kamu melihat: " + f.name, "info", 1500);
+      });
     });
 
-    // (3) Hook CTA "Daftar Sekarang" -> tampilkan toast saat diklik
     const joinBtn = document.getElementById('joinBtn');
     joinBtn.addEventListener('click', (e) => {
-      // tidak mencegah navigasi agar link tetap bekerja; tampilkan toast cepat
-      showToast('Terima kasih! Arahkan ke halaman pendaftaran...', { type: 'success', duration: 2000 });
-      // navigasi tetap terjadi (ke register.html) — jika ingin blocking, gunakan e.preventDefault()
+      const confirmReg = confirm("Apakah kamu yakin ingin mendaftar ke Fauna Geographic?");
+      if (!confirmReg) {
+        e.preventDefault();
+        showToast("Pendaftaran dibatalkan.", "error", 2000);
+      } else {
+        showToast("Arahkan ke halaman pendaftaran...", "success", 2000);
+      }
     });
 
-    // BONUS kecil: jika user pernah melihat fauna terakhir, tampilkan snackbar kecil saat load
-    const last = localStorage.getItem('lastViewedFauna');
-    if (last) {
-      const f = faunaData.find(x => x.id === last);
-      if (f) showToast('Kamu terakhir melihat: ' + f.name, { type: 'info', duration: 3000 });
-    }
+    const hero = document.getElementById('heroTitle');
+    hero.addEventListener('dblclick', () => {
+      hero.style.color = '#' + Math.floor(Math.random()*16777215).toString(16);
+      showToast("Warna judul berubah!", "success", 1500);
+    });
 
-    // Tambahan: ubah navbar background bila scroll (contoh manipulasi class)
-    const navbar = document.getElementById('mainNavbar');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 20) navbar.classList.add('scrolled');
-      else navbar.classList.remove('scrolled');
+    document.addEventListener('keydown', (e) => {
+      if (e.key.toLowerCase() === 'h') {
+        showToast("Shortcut: Menuju Halaman Beranda", "info", 2000);
+        window.location.href = "index.html";
+      }
     });
   });
   </script>
