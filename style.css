@@ -246,7 +246,6 @@ footer {
   background-color: #e67a32;
 }
 
-/* Konten utama dashboard */
 .main-content {
   margin-left: 240px;
   flex: 1;
@@ -267,7 +266,6 @@ footer {
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-/* Table style */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -288,7 +286,6 @@ th {
   color: white;
 }
 
-/* Form style */
 form {
   margin-bottom: 20px;
 }
@@ -300,7 +297,6 @@ input[type="text"] {
   border-radius: 5px;
 }
 
-/* Button */
 button {
   background-color: #ff7f50;
   border: none;
@@ -316,7 +312,6 @@ button:hover {
   background-color: #e5673f;
 }
 
-/* Responsif */
 @media (max-width: 768px) {
   .sidebar {
     transform: translateX(-250px);
@@ -329,3 +324,69 @@ button:hover {
     padding: 20px;
   }
 }
+
+.detail-link {
+  display: inline-block;
+  margin-top: 10px;
+  text-decoration: none;
+  color: #d2691e;
+  font-weight: 600;
+  border: 1px solid #d2691e;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+.detail-link:hover { background: rgba(210,105,30,0.06); }
+
+#toastContainer {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+  pointer-events: none; 
+}
+
+.toast {
+  min-width: 200px;
+  max-width: 360px;
+  background: #222;
+  color: #fff;
+  padding: 12px 14px 12px 14px;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  transform: translateY(20px);
+  opacity: 0;
+  transition: transform 250ms ease, opacity 250ms ease;
+  position: relative;
+  pointer-events: auto;
+}
+
+.toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.toast.success { background: #2e8b57; }
+.toast.info { background: #2b78c8; }
+.toast.error { background: #c94141; }
+
+.toast .toast-close {
+  position: absolute;
+  right: 8px;
+  top: 6px;
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.9);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.navbar.scrolled {
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  opacity: 0.97;
+}
+

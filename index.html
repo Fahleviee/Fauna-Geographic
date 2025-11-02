@@ -1,12 +1,14 @@
 <!doctype html>
 <html lang="id">
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Fauna Geographic - Beranda</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <!-- Navigasi -->
-  <nav class="navbar">
+  <nav class="navbar" id="mainNavbar">
     <h2 class="logo">Fauna Geographic</h2>
     <ul>
       <li><a href="index.html" class="active">Beranda</a></li>
@@ -16,61 +18,195 @@
   </nav>
 
   <!-- Hero -->
-  <section class="hero">
-    <h1>Selamat Datang di Fauna Geographic</h1>
-    <p>Menjelajahi dunia fauna dengan pengetahuan & rasa kagum.</p>
+  <section class="hero" id="heroSection">
+    <h1 id="heroTitle">Selamat Datang di Fauna Geographic</h1>
+    <p id="heroSubtitle">Menjelajahi dunia fauna dengan pengetahuan & rasa kagum.</p>
   </section>
 
-  <!-- Kategori Fauna -->
+  <!-- Kategori Fauna (container dibuat kosong, akan diisi via JS) -->
   <section class="features">
     <h2>Fauna Nusantara</h2>
-    
-    <div class="fauna-card">
-      <img src="asset/komodo.jpeg" alt="Komodo">
-      <div class="fauna-info">
-        <h3>Komodo</h3>
-        <p align="left">
-          Komodo adalah kadal terbesar di dunia yang hanya dapat ditemukan di Nusa Tenggara Timur, terutama di Pulau Komodo, Rinca, dan sekitarnya. 
-          Dengan panjang mencapai tiga meter, hewan ini merupakan predator puncak. 
-          Populasinya semakin terancam akibat perburuan dan kerusakan habitat, sehingga dilindungi secara ketat.
-        </p>
-      </div>
-    </div>
-
-    <div class="fauna-card">
-      <img src="asset/cenderawasih.jpeg" alt="Cenderawasih">
-      <div class="fauna-info">
-        <h3>Cenderawasih</h3>
-        <p align="left">
-          Burung Cenderawasih, dikenal sebagai "burung surga", hanya hidup di Papua dan pulau-pulau sekitarnya. 
-          Burung ini terkenal dengan bulunya yang indah dan tarian kawin yang mempesona. 
-          Habitat alaminya adalah hutan hujan tropis, namun kini terancam akibat perburuan dan deforestasi.
-        </p>
-      </div>
-    </div>
-
-    <div class="fauna-card">
-      <img src="asset/anoa.jpeg" alt="Anoa">
-      <div class="fauna-info">
-        <h3>Anoa</h3>
-        <p align="left">
-          Anoa adalah kerbau kerdil yang hanya ditemukan di Sulawesi. 
-          Hewan ini hidup di hutan pegunungan dan rawa-rawa, serta dikenal pemalu dan sulit dijinakkan. 
-          Populasi anoa terus menurun karena perburuan dan perusakan habitat, sehingga masuk kategori terancam punah.
-        </p>
-      </div>
+    <div id="faunaList">
+      <!-- Kartu fauna akan dibuat di sini oleh JavaScript -->
     </div>
   </section>
 
   <!-- Call to Action -->
   <section class="cta">
-    <p>Bergabunglah dengan komunitas kami untuk membaca artikel lengkap dan berbagi pengetahuan!</p>
-    <a href="register.html" class="btn">Daftar Sekarang</a>
+    <p id="ctaText">Bergabunglah dengan komunitas kami untuk membaca artikel lengkap dan berbagi pengetahuan!</p>
+    <a href="register.html" id="joinBtn" class="btn">Daftar Sekarang</a>
   </section>
 
   <!-- Footer -->
   <footer>
-    <p>&copy; | 2025 Fauna Geographic |</p>
+    <p>&copy; 2025 Fauna Geographic | Semua Hak Dilindungi</p>
   </footer>
+
+  <!-- Toast container (dibuat di DOM oleh script jika belum ada) -->
+  <script>
+  // ===== Data fauna (endomik Nusantara: 3 item) =====
+  const faunaData = [
+    {
+      id: 'komodo',
+      name: 'Komodo',
+      emoji: '🦎',
+      img: 'asset/komodo.jpeg',
+      text: 'Komodo adalah kadal terbesar di dunia yang hanya dapat ditemukan di Nusa Tenggara Timur, terutama di Pulau Komodo, Rinca, dan sekitarnya. Dengan panjang mencapai tiga meter, hewan ini merupakan predator puncak. Populasinya semakin terancam akibat perburuan dan kerusakan habitat, sehingga dilindungi secara ketat.'
+    },
+    {
+      id: 'cenderawasih',
+      name: 'Cenderawasih',
+      emoji: '🐦',
+      img: 'asset/cenderawasih.jpeg',
+      text: 'Burung Cenderawasih, dikenal sebagai "burung surga", hanya hidup di Papua dan pulau-pulau sekitarnya. Burung ini terkenal dengan bulunya yang indah dan tarian kawin yang mempesona. Habitat alaminya adalah hutan hujan tropis, namun kini terancam akibat perburuan dan deforestasi.'
+    },
+    {
+      id: 'anoa',
+      name: 'Anoa',
+      emoji: '🐃',
+      img: 'asset/anoa.jpeg',
+      text: 'Anoa adalah kerbau kerdil yang hanya ditemukan di Sulawesi. Hewan ini hidup di hutan pegunungan dan rawa-rawa, serta dikenal pemalu dan sulit dijinakkan. Populasi anoa terus menurun karena perburuan dan perusakan habitat, sehingga masuk kategori terancam punah.'
+    }
+  ];
+
+  // ===== Utility: buat toast/snackbar murni JS =====
+  function ensureToastContainer() {
+    let container = document.getElementById('toastContainer');
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'toastContainer';
+      container.setAttribute('aria-live', 'polite');
+      container.setAttribute('aria-atomic', 'true');
+      document.body.appendChild(container);
+    }
+    return container;
+  }
+
+  function showToast(message, options = {}) {
+    // options: { duration: ms, type: 'info'|'success'|'error' }
+    const duration = options.duration || 3500;
+    const type = options.type || 'info';
+    const container = ensureToastContainer();
+
+    const toast = document.createElement('div');
+    toast.className = 'toast ' + type;
+    toast.role = 'status';
+    toast.textContent = message;
+
+    // close button
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'toast-close';
+    closeBtn.setAttribute('aria-label', 'Tutup notifikasi');
+    closeBtn.innerHTML = '&times;';
+    closeBtn.onclick = () => { hideToast(toast); };
+    toast.appendChild(closeBtn);
+
+    container.appendChild(toast);
+
+    // slide in
+    requestAnimationFrame(() => toast.classList.add('show'));
+
+    // auto-hide
+    const t = setTimeout(() => hideToast(toast), duration);
+    toast.dataset.timeout = t;
+  }
+
+  function hideToast(toast) {
+    if (!toast) return;
+    // clear timeout if exists
+    if (toast.dataset.timeout) clearTimeout(toast.dataset.timeout);
+    toast.classList.remove('show');
+    toast.addEventListener('transitionend', () => {
+      if (toast.parentNode) toast.parentNode.removeChild(toast);
+    }, { once: true });
+  }
+
+  // ===== DOM Manipulations (minimal 3 operasi DOM tercapai di sini) =====
+  // 1) Update hero text (textContent) -> DOM operation #1
+  // 2) Generate fauna cards dynamically using createElement / appendChild -> DOM ops #2..N
+  // 3) Add attributes/event listeners (setAttribute, addEventListener) for detail buttons -> DOM ops
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // (1) ubah teks hero secara dinamis (DOM manipulation)
+    const heroTitle = document.getElementById('heroTitle');
+    heroTitle.textContent = 'Jelajahi Fauna Endemik Nusantara';
+    const heroSubtitle = document.getElementById('heroSubtitle');
+    heroSubtitle.textContent = 'Tiga fauna ikonik yang hanya bisa kamu temukan di Indonesia.';
+
+    // (2) Buat cards fauna secara dinamis
+    const list = document.getElementById('faunaList');
+
+    faunaData.forEach(item => {
+      // container card
+      const card = document.createElement('div');
+      card.className = 'fauna-card';
+      card.id = 'card-' + item.id;
+
+      // gambar
+      const img = document.createElement('img');
+      img.src = item.img;
+      img.alt = item.name;
+      img.setAttribute('loading', 'lazy'); // attribute example
+
+      // info container
+      const info = document.createElement('div');
+      info.className = 'fauna-info';
+
+      const h3 = document.createElement('h3');
+      h3.textContent = item.emoji + ' ' + item.name;
+
+      const p = document.createElement('p');
+      p.textContent = item.text;
+
+      // tombol lihat detail (akan memicu toast)
+      const detail = document.createElement('a');
+      detail.href = '#';
+      detail.className = 'detail-link';
+      detail.textContent = 'Lihat Detail';
+      // set data attribute (DOM op)
+      detail.setAttribute('data-fauna', item.id);
+
+      // event listener untuk tombol detail (DOM op: addEventListener)
+      detail.addEventListener('click', (e) => {
+        e.preventDefault();
+        // contoh aksi: tampilkan toast dan simpan last viewed di localStorage
+        showToast('Membuka detail: ' + item.name, { type: 'info', duration: 2500 });
+        localStorage.setItem('lastViewedFauna', item.id);
+      });
+
+      // susun elemen
+      info.appendChild(h3);
+      info.appendChild(p);
+      info.appendChild(detail);
+
+      card.appendChild(img);
+      card.appendChild(info);
+
+      list.appendChild(card);
+    });
+
+    // (3) Hook CTA "Daftar Sekarang" -> tampilkan toast saat diklik
+    const joinBtn = document.getElementById('joinBtn');
+    joinBtn.addEventListener('click', (e) => {
+      // tidak mencegah navigasi agar link tetap bekerja; tampilkan toast cepat
+      showToast('Terima kasih! Arahkan ke halaman pendaftaran...', { type: 'success', duration: 2000 });
+      // navigasi tetap terjadi (ke register.html) — jika ingin blocking, gunakan e.preventDefault()
+    });
+
+    // BONUS kecil: jika user pernah melihat fauna terakhir, tampilkan snackbar kecil saat load
+    const last = localStorage.getItem('lastViewedFauna');
+    if (last) {
+      const f = faunaData.find(x => x.id === last);
+      if (f) showToast('Kamu terakhir melihat: ' + f.name, { type: 'info', duration: 3000 });
+    }
+
+    // Tambahan: ubah navbar background bila scroll (contoh manipulasi class)
+    const navbar = document.getElementById('mainNavbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 20) navbar.classList.add('scrolled');
+      else navbar.classList.remove('scrolled');
+    });
+  });
+  </script>
 </body>
 </html>
